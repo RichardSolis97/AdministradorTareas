@@ -1,0 +1,155 @@
+﻿@model IEnumerable<Prueba2.Models.Cl_Tareas>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<br />
+
+<div class="text-center">
+    <h1 class="display-4">Administrador de Tareas</h1>
+    @*<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
+</div>
+
+
+<br />
+
+@if (TempData["AlertMessage"] != null){
+    <div class="alert alert-success alert-dismissible">
+
+         @TempData["AlertMessage"]
+
+        <button type="button" class="close" data-bs-dismiss="alert" aria-hidden="true">&times</button>
+    </div>
+
+}
+
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible">
+
+         @TempData["ErrorMessage"]
+        <button type="button" class="close" data-bs-dismiss="alert" aria-hidden="true">&times</button>
+
+    </div>
+
+    
+
+}
+
+<br />
+
+
+<div class="card">
+    <div class="card-header">
+        Tareas
+    </div>
+    
+    <div class="card-body">
+
+        <p>
+            <a asp-action="Create" class="btn btn-success btn-sm">Nueva Tarea</a>
+        </p>
+       
+        <div class="input-group mb-3 input-group-sm">
+            <br />
+            <input class="form-control" id="myInput" type="text" placeholder="Buscar..">
+            <br>
+        </div>
+        
+        <hr />
+       
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Codigo
+                        @*@Html.DisplayNameFor(model => model.id)*@
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Descripcion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Colaborador)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Estado)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Prioridad)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FechaInicio)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FechaFin)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Notas)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="myTable">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Descripcion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Colaborador)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Estado)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Prioridad)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FechaInicio)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FechaFin)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Notas)
+                        </td>
+
+                        <td>
+
+                            <a asp-action="Edit" asp-controller="Tareas" asp-route-id="@item.id" asp-route-Estado="@item.Estado" class="btn btn-primary btn-sm">Editar</a>
+                            <a  asp-action="Delete" asp-controller="Tareas" asp-route-id="@item.id" asp-route-Estado="@item.Estado" class="btn btn-danger btn-sm">Eliminar</a>
+                            @*<a class="btn btn-primary btn-sm">@Html.ActionLink("Editar", "Edit", new {  id=item.id }) |</a>
+                            <a class="btn btn-danger btn-sm">@Html.ActionLink("Eliminar" , "Delete", new { id=item.id })</a>*@
+
+                        </td>
+                    </tr>
+                   
+                }
+                
+            </tbody>
+        </table>
+    </div>
+    
+  
+
+</div>
+<script>
+    $(document).ready(function(){
+      $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+</script>
+
+
